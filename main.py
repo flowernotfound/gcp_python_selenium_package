@@ -38,9 +38,9 @@ def download_csv_for_date_range(driver, date_range, file_name):
         old_path = os.path.join('/tmp', latest_csv)
         new_path = os.path.join('/tmp', file_name)
         os.rename(old_path, new_path)
-        print(f"Renamed downloaded file from {latest_csv} to {file_name}")
     else:
-        print("No CSV file found in the download directory")
+        print("No CSV file")
+    
     upload_file_to_drive(file_name)
 
 def main(event, context):
@@ -62,7 +62,7 @@ def main(event, context):
             download_csv_for_date_range(driver, date_range, file_name)
         
     except Exception as e:
-        print(f"An error occurred: {str(e)}")
+        print(f"Error : {str(e)}")
         
     finally:
         driver.close()

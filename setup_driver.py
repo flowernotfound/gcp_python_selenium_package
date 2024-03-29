@@ -13,12 +13,14 @@ def setup_driver():
 
     prefs = {
         'download.prompt_for_download': False,
+        'profile.default_content_settings.popups': 0,
         'download.directory_upgrade': True
     }
 
     options.add_experimental_option('prefs', prefs)
-    chromedriver_path = os.path.join(os.getcwd(), 'chromedriver')
-    options.binary_location = os.path.join(os.getcwd(), 'headless-chromium')
+    bin_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'bin')
+    chromedriver_path = os.path.join(bin_path, 'chromedriver')
+    options.binary_location = os.path.join(bin_path, 'headless-chromium')
     driver = webdriver.Chrome(chromedriver_path, options=options)
     
     driver.command_executor._commands["send_command"] = (

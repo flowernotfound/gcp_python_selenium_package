@@ -14,4 +14,3 @@ def upload_file_to_drive(file_name):
     }
     media = MediaFileUpload(f'/tmp/{file_name}', mimetype='text/csv')
     file = service.files().create(body=file_metadata, media_body=media, fields='id').execute()
-    print(f"Uploaded {file_name} to Google Drive with ID: {file.get('id')}")
