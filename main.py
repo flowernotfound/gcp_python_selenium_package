@@ -3,8 +3,8 @@ from get_value_from_sheets import get_value_from_sheets
 from automation import automation_part
 import os
 
-URL1 = os.environ.get("TOP_URL")
-URL2 = os.environ.get("RESERVATION_URL")
+URL1 = os.environ.get("URL1")
+URL2 = os.environ.get("URL2")
 COMPANY_CODE = os.environ.get("COMPANY_CODE")
 DATE_RANGES = [
     ['2024/04/01', '2024/04/20']

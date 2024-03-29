@@ -4,8 +4,8 @@ import os
 
 SPREADSHEET_ID = os.environ.get("SPREADSHEET_ID")
 TAB_NAME = os.environ.get("TAB_NAME")
-CELL_RANGE1 = os.environ.get("CELL_RANGE_LOGIN_ID")
-CELL_RANGE2 = os.environ.get("CELL_RANGE_PASSWORD")
+CELL_RANGE1 = os.environ.get("CELL_RANGE1")
+CELL_RANGE2 = os.environ.get("CELL_RANGE2")
 
 def get_value_from_sheets(): # get value from Google Sheets
     creds = get_credentials()
