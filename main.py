@@ -1,10 +1,5 @@
 import os
-from selenium import webdriver
 from selenium.webdriver.common.by import By
-# from selenium.webdriver.chrome.options import Options
-# from google.oauth2.credentials import Credentials
-# from googleapiclient.discovery import build
-# from googleapiclient.http import MediaFileUpload
 from time import sleep
 from setup_driver import setup_driver
 from get_value_from_sheets import get_login_details
@@ -43,10 +38,7 @@ def download_csv_for_date_range(driver, date_range, file_name):
     
     upload_file_to_drive(file_name)
 
-def main(event, context):
-    login_id, password = get_login_details()
-    driver = setup_driver()
-    
+def automation_part(driver, login_id, password, TOP_URL, RESERVATION_URL, COMPANY_CODE, DATE_RANGES, FILE_NAMES):
     try:
         driver.get(TOP_URL)
         driver.implicitly_wait(5)
@@ -60,10 +52,12 @@ def main(event, context):
         
         for date_range, file_name in zip(DATE_RANGES, FILE_NAMES):
             download_csv_for_date_range(driver, date_range, file_name)
-        
     except Exception as e:
         print(f"Error : {str(e)}")
-        
-    finally:
-        driver.close()
-        driver.quit()
+
+def main(event, context):
+    login_id, password = get_login_details()
+    driver = setup_driver()
+    automation_part(driver, login_id, password, TOP_URL, RESERVATION_URL, COMPANY_CODE, DATE_RANGES, FILE_NAMES)
+    driver.close()
+    driver.quit()
