@@ -18,7 +18,7 @@ DATE_RANGES = [
     ['2024/04/01', '2024/04/20']
 ]
 FILE_NAMES = [
-    '泊屋上野_01_20240401_20240420.CSV'
+    'test_01_20240401_20240420.CSV'
 ]
 
 def select_month(driver, from_date, to_date):
@@ -51,18 +51,18 @@ def list_downloaded_files():
         file_path = os.path.join('/tmp', file)
         print(f"File: {file}, Size: {os.path.getsize(file_path)} bytes")
 
-def exec_search(event, context):
+def main(event, context):
     login_id, password = get_login_details()
     driver = setup_driver()
     
     try:
-        driver.get(TOP_URL) #("https://www37.neppan.net/")
+        driver.get(TOP_URL)
         driver.implicitly_wait(5)
         driver.find_element(By.ID, 'clientCode').send_keys(COMPANY_CODE)
         driver.find_element(By.ID, 'loginId').send_keys(login_id)
         driver.find_element(By.ID, 'password').send_keys(password)
         driver.find_element(By.LINK_TEXT, 'ログイン').click()
-        driver.get(RESERVATION_URL) #("https://www37.neppan.net/reservationView.php")
+        driver.get(RESERVATION_URL)
         driver.find_element(By.ID, 'hideButton').click()
         driver.find_element(By.CSS_SELECTOR, "label[for='searchStatusArg3']").click()
         
