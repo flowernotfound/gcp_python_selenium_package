@@ -5,7 +5,7 @@ import os
 
 TARGET_FOLDER = os.environ.get("TARGET_FOLDER_ID")
 
-def upload_file_to_drive(file_name):
+def upload_file_to_drive(file_name): # upload file to Google Drive
     creds = get_credentials()
     service = build('drive', 'v3', credentials=creds)
     file_metadata = {
