@@ -14,24 +14,12 @@ from get_value_from_sheets import get_login_details
 TOP_URL = os.environ.get("TOP_URL")
 RESERVATION_URL = os.environ.get("RESERVATION_URL")
 COMPANY_CODE = os.environ.get("COMPANY_CODE")
-TARGET_FOLDER = os.environ.get("TARGET_FOLDER_ID")
 DATE_RANGES = [
     ['2024/04/01', '2024/04/20']
 ]
 FILE_NAMES = [
     '泊屋上野_01_20240401_20240420.CSV'
 ]
-
-def upload_file_to_drive(file_name):
-    creds = get_credentials()
-    service = build('drive', 'v3', credentials=creds)
-    file_metadata = {
-        'name': file_name,
-        'parents': [TARGET_FOLDER]
-    }
-    media = MediaFileUpload(f'/tmp/{file_name}', mimetype='text/csv')
-    file = service.files().create(body=file_metadata, media_body=media, fields='id').execute()
-    print(f"Uploaded {file_name} to Google Drive with ID: {file.get('id')}")
 
 def select_month(driver, from_date, to_date):
     driver.find_element(By.ID, 'searchStayStartDate').send_keys(from_date)
