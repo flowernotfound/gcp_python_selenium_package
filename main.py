@@ -1,15 +1,14 @@
 import os
-import json
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.options import Options
-from google.oauth2.credentials import Credentials
-from googleapiclient.discovery import build
-from googleapiclient.http import MediaFileUpload
+# from selenium.webdriver.chrome.options import Options
+# from google.oauth2.credentials import Credentials
+# from googleapiclient.discovery import build
+# from googleapiclient.http import MediaFileUpload
 from time import sleep
 from setup_driver import setup_driver
-from get_credentials import get_credentials
 from get_value_from_sheets import get_login_details
+from upload_file_to_drive import upload_file_to_drive
 
 TOP_URL = os.environ.get("TOP_URL")
 RESERVATION_URL = os.environ.get("RESERVATION_URL")
@@ -44,13 +43,6 @@ def download_csv_for_date_range(driver, date_range, file_name):
         print("No CSV file found in the download directory")
     upload_file_to_drive(file_name)
 
-def list_downloaded_files():
-    files = os.listdir('/tmp')
-    print("Downloaded files:")
-    for file in files:
-        file_path = os.path.join('/tmp', file)
-        print(f"File: {file}, Size: {os.path.getsize(file_path)} bytes")
-
 def main(event, context):
     login_id, password = get_login_details()
     driver = setup_driver()
@@ -67,11 +59,7 @@ def main(event, context):
         driver.find_element(By.CSS_SELECTOR, "label[for='searchStatusArg3']").click()
         
         for date_range, file_name in zip(DATE_RANGES, FILE_NAMES):
-            print(f"Downloading CSV for date range: {date_range}")
             download_csv_for_date_range(driver, date_range, file_name)
-        
-        print("Listing downloaded files:")
-        list_downloaded_files()
         
     except Exception as e:
         print(f"An error occurred: {str(e)}")
