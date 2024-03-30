@@ -1,6 +1,6 @@
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
-from get_credentials import get_credentials
+from utils.get_credentials import get_credentials
 import os
 
 TARGET_FOLDER = os.environ.get("TARGET_FOLDER_ID")

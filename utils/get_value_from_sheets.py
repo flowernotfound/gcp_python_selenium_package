@@ -1,5 +1,5 @@
 from googleapiclient.discovery import build
-from get_credentials import get_credentials
+from utils.get_credentials import get_credentials
 import os
 
 SPREADSHEET_ID = os.environ.get("SPREADSHEET_ID")
