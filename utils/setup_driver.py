@@ -18,9 +18,15 @@ def setup_driver():
     }
 
     options.add_experimental_option('prefs', prefs)
-    bin_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'bin')
+    # bin_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'bin')
+    # chromedriver_path = os.path.join(bin_path, 'chromedriver')
+    # options.binary_location = os.path.join(bin_path, 'headless-chromium')
+    
+    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    bin_path = os.path.join(base_dir, 'bin')
     chromedriver_path = os.path.join(bin_path, 'chromedriver')
     options.binary_location = os.path.join(bin_path, 'headless-chromium')
+    
     driver = webdriver.Chrome(chromedriver_path, options=options)
     
     driver.command_executor._commands["send_command"] = (
