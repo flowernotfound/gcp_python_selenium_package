@@ -1,6 +1,6 @@
 from selenium.webdriver.common.by import By
 from time import sleep
-from upload_file_to_drive import upload_file_to_drive
+from utils.upload_file_to_drive import upload_file_to_drive
 import os
 
 def select_month(driver, from_date, to_date):
