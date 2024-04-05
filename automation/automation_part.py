@@ -7,12 +7,18 @@ def select_month(driver, from_date, to_date):
     driver.find_element(By.ID, 'searchStayStartDate').send_keys(from_date)
     driver.find_element(By.ID, 'searchStayEndDate').send_keys(to_date)
 
-def download_csv_for_date_range(driver, date_range, file_name):
+def download_csv(driver, date_range):
     select_month(driver, date_range[0], date_range[1])
     driver.find_element(By.ID, 'doSearch').click()
     sleep(3)
     driver.find_element(By.ID, 'CsvOut').click()
     sleep(4)
+
+def clear_search_form(driver):
+    driver.find_element(By.ID, 'searchStayStartDate').clear()
+    driver.find_element(By.ID, 'searchStayEndDate').clear()
+
+def find_and_upload_csv(file_name):
     downloaded_files = os.listdir('/tmp')
     csv_files = [file for file in downloaded_files if file.endswith('.CSV')]
     
@@ -23,8 +29,6 @@ def download_csv_for_date_range(driver, date_range, file_name):
         os.rename(old_path, new_path)
     else:
         print("No CSV file found in the download directory")
-    
-    upload_file_to_drive(file_name)
 
 def automation_part(driver, login_id, password, TOP_URL, RESERVATION_URL, COMPANY_CODE, DATE_RANGES, FILE_NAMES):
     try:
@@ -39,6 +43,11 @@ def automation_part(driver, login_id, password, TOP_URL, RESERVATION_URL, COMPAN
         driver.find_element(By.CSS_SELECTOR, "label[for='searchStatusArg3']").click()
         
         for date_range, file_name in zip(DATE_RANGES, FILE_NAMES):
-            download_csv_for_date_range(driver, date_range, file_name)
+            print(f"Downloading CSV for {date_range[0]} to {date_range[1]}")
+            download_csv(driver, date_range)
+            clear_search_form(driver)
+            find_and_upload_csv(file_name)
+            upload_file_to_drive(file_name)
+            
     except Exception as e:
         print(f"Error : {str(e)}")

@@ -7,10 +7,12 @@ URL1 = os.environ.get("URL1")
 URL2 = os.environ.get("URL2")
 COMPANY_CODE = os.environ.get("COMPANY_CODE")
 DATE_RANGES = [
-    ['2024/04/01', '2024/04/20']
+    ['2024/04/01', '2024/04/20'],
+    ['2024/05/01', '2024/05/20']
 ]
 FILE_NAMES = [
-    'test_01_20240401_20240420.CSV'
+    'test01_20240401_20240420.CSV',
+    'test01_20240501_20240520.CSV'
 ]
 
 def main(event, context):
