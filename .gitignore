@@ -1,2 +1,5 @@
-command.txt
+__pycache__/
+env/
+command/
 .DS_Store
+test.py
