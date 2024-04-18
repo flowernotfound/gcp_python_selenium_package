@@ -1,22 +1,26 @@
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import Select
 from time import sleep
 from utils.upload_file_to_drive import upload_file_to_drive
 import os
 
-def select_month(driver, from_date, to_date):
-    driver.find_element(By.ID, 'searchStayStartDate').send_keys(from_date)
-    driver.find_element(By.ID, 'searchStayEndDate').send_keys(to_date)
+def select_analyze_month(driver, from_date, to_date):
+    driver.find_element(By.ID, 'txtFromDate').send_keys(from_date)
+    driver.find_element(By.ID, 'txtToDate').send_keys(to_date)
 
 def download_csv(driver, date_range):
-    select_month(driver, date_range[0], date_range[1])
-    driver.find_element(By.ID, 'doSearch').click()
-    sleep(3)
-    driver.find_element(By.ID, 'CsvOut').click()
-    sleep(4)
+    select_analyze_month(driver, date_range[0], date_range[1])
+    driver.find_element(By.ID, 'btnSearch').click()
+    target_element = driver.find_element(By.ID, "btnReportCSV")
+    driver.execute_script("arguments[0].scrollIntoView(true);", target_element)
+    sleep(1)
+    target_element.click()
+    driver.execute_script("window.scrollTo(0, 0);")
+    sleep(5)
 
-def clear_search_form(driver):
-    driver.find_element(By.ID, 'searchStayStartDate').clear()
-    driver.find_element(By.ID, 'searchStayEndDate').clear()
+def clear_analyze_form(driver):
+    driver.find_element(By.ID, 'txtFromDate').clear()
+    driver.find_element(By.ID, 'txtToDate').clear()
 
 def find_and_upload_csv(file_name):
     downloaded_files = os.listdir('/tmp')
@@ -36,19 +40,24 @@ def login(driver,COMPANY_CODE, login_id, password):
     driver.find_element(By.ID, 'password').send_keys(password)
     driver.find_element(By.LINK_TEXT, 'ログイン').click()
 
-def automation_part(driver, login_id, password, TOP_URL, RESERVATION_URL, COMPANY_CODE, DATE_RANGES, FILE_NAMES):
+def automation_part(driver, login_id, password, TOP_URL, ANALYZE_URL, COMPANY_CODE, DATE_RANGES, FILE_NAMES):
     try:
         driver.get(TOP_URL)
         driver.implicitly_wait(5)
         login(driver, COMPANY_CODE, login_id, password)
-        driver.get(RESERVATION_URL)
-        driver.find_element(By.ID, 'hideButton').click()
-        driver.find_element(By.CSS_SELECTOR, "label[for='searchStatusArg3']").click()
+        driver.get(ANALYZE_URL)
+        driver.find_element(By.ID, 'hideKensakuDispButton').click()
+        select_style_element = driver.find_element(By.ID, "cmbOutputStyle")
+        select_style_object = Select(select_style_element)
+        select_style_object.select_by_value("2")
+        select_element = driver.find_element(By.ID, "cmbSum")
+        select_object = Select(select_element)
+        select_object.select_by_value("1")
         
         for date_range, file_name in zip(DATE_RANGES, FILE_NAMES):
             print(f"Downloading CSV for {date_range[0]} to {date_range[1]}")
+            clear_analyze_form(driver)
             download_csv(driver, date_range)
-            clear_search_form(driver)
             find_and_upload_csv(file_name)
             upload_file_to_drive(file_name)
             

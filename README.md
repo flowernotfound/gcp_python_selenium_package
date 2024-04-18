@@ -89,7 +89,7 @@ This package is released under the [MIT License](LICENSE.txt). Please see LICENS
 
 ## utils について
 
-`utils/`ディレクトリには以下の便利な関数が含まれています。
+`utils/`ディレクトリには以下の関数が含まれています。
 
 - **get_credentials**: GCP の認証情報を取得します。
 - **setup_driver**: Selenium を headless モードで動作させ、ファイルのダウンロードが可能なように WebDriver を設定します。
