@@ -24,7 +24,7 @@ def reservation_entry(event, context):
     driver.quit()
 
 def analyze_entry(event, context):
-    print("Start")
+    print("Start : analyze")
     date_ranges = [];
     date_ranges = generate_date_ranges()
     date_len = len(date_ranges)
@@ -32,6 +32,6 @@ def analyze_entry(event, context):
     value1, value2 = get_value_from_sheets()
     driver = setup_driver()
     analyze_automation(driver, value1, value2, URL1, URL2, COMPANY_CODE, date_ranges, file_names)
-    print("Finished")
+    print("Finished : analyze")
     driver.close()
     driver.quit()
