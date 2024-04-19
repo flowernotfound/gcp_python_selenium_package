@@ -36,7 +36,7 @@ def login(driver,COMPANY_CODE, login_id, password):
     driver.find_element(By.ID, 'password').send_keys(password)
     driver.find_element(By.LINK_TEXT, 'ログイン').click()
 
-def automation_part(driver, login_id, password, TOP_URL, RESERVATION_URL, COMPANY_CODE, DATE_RANGES, FILE_NAMES):
+def reservation_automation(driver, login_id, password, TOP_URL, RESERVATION_URL, COMPANY_CODE, DATE_RANGES, FILE_NAMES):
     try:
         driver.get(TOP_URL)
         driver.implicitly_wait(5)
