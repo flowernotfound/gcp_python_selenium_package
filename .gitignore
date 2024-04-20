@@ -3,4 +3,3 @@ env/
 command/
 src/
 .DS_Store
-test.py
