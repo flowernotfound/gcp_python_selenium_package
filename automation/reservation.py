@@ -2,6 +2,7 @@ from selenium.webdriver.common.by import By
 from time import sleep
 from utils.upload_file_to_drive import upload_file_to_drive
 import os
+from utils.send_error_email import send_error_email
 
 def select_month(driver, from_date, to_date):
     driver.find_element(By.ID, 'searchStayStartDate').send_keys(from_date)
@@ -53,4 +54,6 @@ def reservation_automation(driver, login_id, password, TOP_URL, RESERVATION_URL,
             upload_file_to_drive(file_name)
             
     except Exception as e:
+        error_message = f"Error: {str(e)}"
         print(f"Error : {str(e)}")
+        send_error_email(error_message)
