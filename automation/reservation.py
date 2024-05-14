@@ -32,10 +32,15 @@ def find_and_upload_csv(file_name):
         print("No CSV file found in the download directory")
 
 def login(driver,COMPANY_CODE, login_id, password):
-    driver.find_element(By.ID, 'clientCode').send_keys(COMPANY_CODE)
-    driver.find_element(By.ID, 'loginId').send_keys(login_id)
-    driver.find_element(By.ID, 'password').send_keys(password)
-    driver.find_element(By.LINK_TEXT, 'ログイン').click()
+    try:
+        driver.find_element(By.ID, 'clientCode').send_keys(COMPANY_CODE)
+        driver.find_element(By.ID, 'loginId').send_keys(login_id)
+        driver.find_element(By.ID, 'password').send_keys(password)
+        driver.find_element(By.LINK_TEXT, 'ログイン').click()
+    except Exception as e:
+        error_message = f"Error in login: {str(e)}"
+        print(error_message)
+        send_error_email(error_message)
 
 def reservation_automation(driver, login_id, password, TOP_URL, RESERVATION_URL, COMPANY_CODE, DATE_RANGES, FILE_NAMES):
     try:
